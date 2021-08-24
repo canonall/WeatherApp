@@ -1,8 +1,7 @@
 package com.canonal.weatherapp.adapter
 
+
 import android.content.Context
-import android.content.res.Resources
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,25 +11,28 @@ import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.canonal.weatherapp.R
-import com.canonal.weatherapp.data.Data
 import com.canonal.weatherapp.model.City
 
-class WeatherListAdapter(private val context: Context) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val cities = Data.getWeatherData(context)
+class WeatherListAdapter(
+    private val context: Context,
+    private val cities: ArrayList<City>,
+    private val onItemClicked: (position: Int) -> Unit
+) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return WeatherListViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.layout_weather_list_item, parent, false)
+                .inflate(R.layout.layout_weather_list_item, parent, false),
+            onItemClicked
         )
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is WeatherListViewHolder -> {
-                holder.bind(cities[position])
+                holder.bind(cities[position],context)
             }
         }
     }
@@ -40,8 +42,13 @@ class WeatherListAdapter(private val context: Context) :
     }
 
     class WeatherListViewHolder constructor(
-        itemView: View
-    ) : RecyclerView.ViewHolder(itemView) {
+        itemView: View,
+        private val onItemClicked: (position: Int) -> Unit
+    ) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+
+        init {
+            itemView.setOnClickListener(this)
+        }
 
         private val tvCityName: TextView =
             itemView.findViewById(R.id.tv_city_name)
@@ -54,15 +61,26 @@ class WeatherListAdapter(private val context: Context) :
         private val llCityBackground: LinearLayout =
             itemView.findViewById(R.id.ll_city_background)
 
-
-        fun bind(city: City) {
+        fun bind(city: City, context: Context) {
             tvCityName.text = city.name
             tvWeatherDescription.text = city.weather.weatherDescription
             tvTemperature.text = city.weather.temperature
-            ivWeatherIcon.setImageDrawable(city.weather.icon)
-            llCityBackground.background = city.imageMini
+
+            val iconId = context.resources.getIdentifier(city.weather.icon,"drawable",context.packageName)
+            val drawableIcon= ResourcesCompat.getDrawable(context.resources,iconId,context.theme)
+            ivWeatherIcon.setImageDrawable(drawableIcon)
+
+            val imageMiniId = context.resources.getIdentifier(city.imageMini, "drawable", context.packageName)
+            val drawableMini = ResourcesCompat.getDrawable(context.resources, imageMiniId, context.theme)
+            llCityBackground.background = drawableMini
 
         }
+
+        override fun onClick(v: View?) {
+            val position = absoluteAdapterPosition
+            onItemClicked(position)
+        }
+
     }
 }
 

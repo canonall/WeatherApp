@@ -7,7 +7,7 @@ data class City(
      val name: String,
      val weather: Weather,
      val image: String,
-     val imageMini: String,
+     val imageMini: Drawable?,
 ){
 
 }

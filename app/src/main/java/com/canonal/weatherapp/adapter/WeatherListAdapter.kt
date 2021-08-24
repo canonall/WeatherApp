@@ -15,9 +15,9 @@ import com.canonal.weatherapp.R
 import com.canonal.weatherapp.data.Data
 import com.canonal.weatherapp.model.City
 
-class WeatherListAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class WeatherListAdapter(private val context: Context) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val context: Context = context
     private val cities = Data.getWeatherData(context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -30,7 +30,7 @@ class WeatherListAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.V
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is WeatherListViewHolder -> {
-                holder.bind(cities[position], context)
+                holder.bind(cities[position])
             }
         }
     }
@@ -55,15 +55,13 @@ class WeatherListAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.V
             itemView.findViewById(R.id.ll_city_background)
 
 
-        fun bind(city: City, context: Context) {
+        fun bind(city: City) {
             tvCityName.text = city.name
             tvWeatherDescription.text = city.weather.weatherDescription
             tvTemperature.text = city.weather.temperature
-            // ivWeatherIcon.text=city.weather.temperature
-            val id =
-                context.resources.getIdentifier(city.imageMini, "drawable", context.packageName)
-            val drawable = ResourcesCompat.getDrawable(context.resources, id, context.theme)
-            llCityBackground.background = drawable
+            ivWeatherIcon.setImageDrawable(city.weather.icon)
+            llCityBackground.background = city.imageMini
+
         }
     }
 }

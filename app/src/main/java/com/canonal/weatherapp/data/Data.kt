@@ -12,25 +12,24 @@ object Data {
             val cities: ArrayList<City> = arrayListOf()
 
             val iconSunny = context.resources.getResourceEntryName(R.drawable.ic_sunny)
-            val iconCloudy = context.resources.getResourceEntryName(R.drawable.ic_cloudy)
+            val iconCloudy = context.resources.getResourceEntryName(R.drawable.ic_snowy)
             val iconRainy = context.resources.getResourceEntryName(R.drawable.ic_rainy)
 
-            val weatherIstanbul = Weather("Sunny", "30°", iconSunny)
+            val weatherIstanbul = Weather("Sunny", "25°", iconSunny)
             val weatherBerlin = Weather("Rainy", "21°", iconRainy)
-            val weatherLondon = Weather("Cloudy", "18°", iconCloudy)
+            val weatherLondon = Weather("Snowy", "18°", iconCloudy)
 
-            val imageMiniIstanbul = context.resources.getResourceEntryName(R.drawable.sunny_mini)
-            val imageMiniBerlin = context.resources.getResourceEntryName(R.drawable.night_mini)
-            val imageMiniLondon = context.resources.getResourceEntryName(R.drawable.cloudy_mini)
+            val imageMiniIstanbul = context.resources.getResourceEntryName(R.drawable.mini_sunny)
+            val imageMiniBerlin = context.resources.getResourceEntryName(R.drawable.mini_rainy)
+            val imageMiniLondon = context.resources.getResourceEntryName(R.drawable.mini_snowy)
 
-            val imageIstanbul = context.resources.getResourceEntryName(R.drawable.sunny)
-            val imageBerlin = context.resources.getResourceEntryName(R.drawable.night)
-            val imageLondon = context.resources.getResourceEntryName(R.drawable.cloudy)
+            val imageIstanbul = context.resources.getResourceEntryName(R.drawable.background_sunny)
+            val imageBerlin = context.resources.getResourceEntryName(R.drawable.background_rainy)
+            val imageLondon = context.resources.getResourceEntryName(R.drawable.background_snowy)
 
-
-            val cityIstanbul = City("Istanbul", weatherIstanbul, imageIstanbul, imageMiniIstanbul)
-            val cityBerlin = City("Berlin", weatherBerlin, imageBerlin, imageMiniBerlin)
-            val cityLondon = City("London", weatherLondon, imageLondon, imageMiniLondon)
+            val cityIstanbul = City("Paris", weatherIstanbul, imageIstanbul, imageMiniIstanbul)
+            val cityBerlin = City("San Francisco", weatherBerlin, imageBerlin, imageMiniBerlin)
+            val cityLondon = City("New York", weatherLondon, imageLondon, imageMiniLondon)
 
             cities.add(cityIstanbul)
             cities.add(cityBerlin)
